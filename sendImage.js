@@ -6,7 +6,7 @@ const server = http.createServer((req,res)=>{
     console.log(`request was made ${req.url}`);
     switch (req.url) {
         case '/':
-            res.write("hi wasupp?")
+            res.end("hi wasupp?")
             console.log(`req was made to ${req.url}`);
             break;
     }

@@ -4,9 +4,9 @@ const url = 'http://localhost:3300/';
 
 (async function(){
     try {
-        let res = await fetch(url);
-        let data = res.buffer();
-        console.log(data);
+        fetch(url)
+        .then(res => res.text())
+        .then(body => console.log(body))
     } catch (err) {
         console.log("there was an error\n");
         console.log(err);
