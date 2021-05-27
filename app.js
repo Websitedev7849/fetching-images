@@ -1,18 +1,24 @@
-const fetch = require('node-fetch');
+const http = require('http');
 const fs = require('fs');
 
 const url = 'http://localhost:3300/';
+const path = './files/copy_of_photo.jpg';
 
-(async function(){
-    try {
-        let res = await fetch(url);
-        let data = await res.text();
-        fs.writeFile('./files/copy_of_photo.jpg', data, (err)=>{
-            (err)? console.log("some error"): console.log("no error") ; 
-        })
 
-    } catch (err) {
-        console.log("there was an error\n");
-        console.log(err);
-    }
-})();
+const req = http.request( url , res => {
+    console.log(`statusCode: ${res.statusCode}`);
+
+    let writeStream = fs.createWriteStream(path);
+
+    res.on('data', d => {
+        writeStream.write(d);
+    });
+
+});
+
+req.on('error', err => {
+    console.log("there was an error");
+    console.error(err);
+});
+
+req.end();
